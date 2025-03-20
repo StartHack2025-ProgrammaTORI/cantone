@@ -56,9 +56,8 @@
 
 # Home page
 
-![[UI.png]]
+!(UI.png)
 
-[[Drawing 2025-03-20 13.23.26.excalidraw]]
 ## Suggested consultancy
 - Caso utente **conferma**:
 	- `{genral_info, profile}`  vengono passate all'AI per generare un report da inoltrate all'azienda di consulenza
