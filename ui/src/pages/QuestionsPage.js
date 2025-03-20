@@ -35,7 +35,7 @@ const QuestionsPage = () => {
       setIndexAnswer(null)
       setQuestion(data.data)
       if (Object.keys(data.data).length === 0)
-        fadeOutEffect(() => navigate('/todos'), setFadeOutAll)
+        fadeOutEffect(() => navigate('/home'), setFadeOutAll)
     })
   }, [indexQuestion, navigate])
 

@@ -1,38 +1,42 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { Typography, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import ConsultancyList from '../components/organisms/ConsultancyList';
 
 const HomePage = () => {
   const [fadeOut, setFadeOut] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // Start fading out after 1 second
-    const timer = setTimeout(() => {
-      setFadeOut(true);
-    }, 1000);
+  // Mocked data
+  const suggestedConsultancy = ['Consultancy A', 'Consultancy B', 'Consultancy C'];
+  const requestedConsultancy = ['Consultancy D', 'Consultancy E'];
+  const consultancyAskedFor = ['Consultancy F', 'Consultancy G', 'Consultancy H'];
 
-    // Navigate to the questions page after the fade-out animation
-    const navigateTimer = setTimeout(() => {
-      navigate('/questions');
-    }, 1500); // 1 second for delay + 0.5 seconds for fade-out
-
-    return () => {
-      clearTimeout(timer);
-      clearTimeout(navigateTimer);
-    };
-  }, [navigate]);
-
-  const styles = {
-    textAlign: 'center',
-    fontSize: '3rem',
-    color: '#3CAF56',
-    marginTop: '20%',
-    fontFamily: 'Arial, sans-serif',
-    opacity: fadeOut ? 0 : 2, // Fading effect
-    transition: 'opacity 0.5s ease-in-out', // Smooth transition
+  // Removed useEffect that handles fade-out and navigation
+  const pageStyles = {
+    opacity: 1, // Set opacity to a fixed value
+    transition: 'opacity 0.5s ease-in-out',
   };
 
-  return <h1 style={styles}>Ciao</h1>;
+  return (
+    <div style={pageStyles}>
+      <Button
+        variant="contained"
+        style={{ position: 'absolute', top: '10px', right: '10px' }} // Changed 'left' to 'right'
+        onClick={() => navigate('/settings')}
+      >
+        Settings
+      </Button>
+      <Typography variant="h4" style={{ textAlign: 'center', marginTop: '20px' }}>
+        .inno
+      </Typography>
+      <div style={{ marginTop: '30px', textAlign: 'center' }}>
+        <ConsultancyList title="Suggested Consultancy" items={suggestedConsultancy} />
+        <ConsultancyList title="Requested Consultancy" items={requestedConsultancy} />
+        <ConsultancyList title="Consultancy I'm Asked For" items={consultancyAskedFor} />
+      </div>
+    </div>
+  );
 };
 
 export default HomePage;

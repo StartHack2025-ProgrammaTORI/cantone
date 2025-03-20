@@ -12,7 +12,7 @@ class SDK {
         });
     }
 
-  async getQuestion(index) {
+    async getQuestion(index) {
         try {
             const response = await this._instance.get('/questions', {
                 params: { index }
