@@ -1,10 +1,11 @@
 import CardComponent from "../atomics/card";
 import { Radio, RadioGroup, FormControlLabel, FormControl } from '@mui/material';
 
-export const QuestionComponent = ({question, options, status, handleClick, indexAnswer, setIndexAnswer}) => {
+function QuestionComponent({question, options, status, handleClick, indexAnswer, setIndexAnswer, textStyle}) {
     return (
         <div style={{ textAlign: 'center' }}>
             <CardComponent
+                textStyle={textStyle}
                 title={question}
                 content={
                     <FormControl>
@@ -32,3 +33,5 @@ export const QuestionComponent = ({question, options, status, handleClick, index
         </div>
     );
 };
+
+export default QuestionComponent

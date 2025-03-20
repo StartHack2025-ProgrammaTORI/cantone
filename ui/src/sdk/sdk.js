@@ -34,6 +34,24 @@ class SDK {
         throw new Error(`GET request failed: ${error.response?.status || error.message}`);
         }
     }
+
+    async getTodos() {
+        try {
+            const response = await this._instance.get('/todos');
+            return response.data;
+        } catch (error) {
+        throw new Error(`GET request failed: ${error.response?.status || error.message}`);
+        }
+    }
+
+    async setTodoAsDone(id) {
+        try {
+            const response = await this._instance.post(`/todos/${id}`);
+            return response.data;
+        } catch (error) {
+        throw new Error(`GET request failed: ${error.response?.status || error.message}`);
+        }
+    }
 }
 
 export const sdk = new SDK();
