@@ -17,13 +17,12 @@
 {
 	"Aziende": [
 		{
-			"genral info": {
-				"name": "EcoDrive Garage",
-				"descrizione servizi": "Officina meccanica specializzata in riparazione e manutenzione di veicoli elettrici",
-				"telfono": "3701315527",
-				"email": "ecodrive@hack.com",
-				"fatturato": 18183,
-			},
+			
+			"name": "EcoDrive Garage",
+			"descrizione": "Officina meccanica specializzata in riparazione e manutenzione di veicoli elettrici",
+			"telfono": "3701315527",
+			"email": "ecodrive@hack.com",
+			"fatturato": 18183,
 			"consulenze": {
 				"suggested": ["Azienda che si propone come consulente"],
 				"pending-outcoming": ["Azienda a cui ho chiesto consulenza e sto aspettando una risposta"],
@@ -63,7 +62,7 @@
 
 ## Suggested consultancy
 - Caso utente **conferma**:
-	- `{genral_info, profile}`  vengono passate all'AI per generare un report da inoltrate all'azienda di consulenza
+	- `{name,descrizione,fatturato, profile}`  vengono passate all'AI per generare un report da inoltrate all'azienda di consulenza
 	- **Commento:** in questo modo si facilità la vita al consulente
 	-  L'area in cui interviene l'azienda di consulenza viene aggiunta a `consulenze.pending-outcome`
 - Caso utente **rifiuta**:

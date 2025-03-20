@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import QuestionsPage from './pages/QuestionsPage';
-import TodosPage from './pages/TodosPage';
 import LandingPage from './pages/LandingPage';
 import SettingsPage from './pages/SettingsPage';
 import './App.css';
@@ -15,7 +14,6 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/questions" element={<QuestionsPage />} />
           <Route path="/home" element={<HomePage />} />
-          <Route path="/todos" element={<TodosPage />} />
           <Route path="/settings" element={<SettingsPage />} />
         </Routes>
       </div>

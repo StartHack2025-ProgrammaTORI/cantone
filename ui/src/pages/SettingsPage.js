@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Typography } from '@mui/material';
+import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 const SettingsPage = () => {
@@ -14,9 +14,9 @@ const SettingsPage = () => {
       >
         Home
       </Button>
-      <Typography variant="h4" style={{ textAlign: 'center', marginTop: '20px' }}>
+      <h4 style={{ textAlign: 'center', marginTop: '20px' }}>
         Settings Page
-      </Typography>
+      </h4>
     </div>
   );
 };

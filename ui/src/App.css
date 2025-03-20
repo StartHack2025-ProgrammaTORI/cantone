@@ -1,6 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
+
+* {
+  font-family: 'Nunito', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+}
+
 .App {
   text-align: center;
-  top:0; bottom:0; right:0; left:0;
+  top: 0; bottom: 0; right: 0; left: 0;
 }
 
 .App-logo {
@@ -9,8 +22,8 @@
 }
 
 .chatbox {
-  flex:1;
-  border:1px solid white;
+  flex: 1;
+  border: 1px solid white;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -58,4 +71,19 @@
 
 .page-container {
   padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .page-container {
+    padding: 1rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .page-container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
 }

@@ -52,6 +52,33 @@ class SDK {
         throw new Error(`GET request failed: ${error.response?.status || error.message}`);
         }
     }
+
+    async getSuggestedConsultancy() {
+        try {
+            const response = await this._instance.get('/consultancy/suggested');
+            return response.data;
+        } catch (error) {
+            throw new Error(`GET request failed: ${error.response?.status || error.message}`);
+        }
+    }
+
+    async getRequestedConsultancy() {
+        try {
+            const response = await this._instance.get('/consultancy/requested');
+            return response.data;
+        } catch (error) {
+            throw new Error(`GET request failed: ${error.response?.status || error.message}`);
+        }
+    }
+
+    async getConsultancyAskedFor() {
+        try {
+            const response = await this._instance.get('/consultancy/asked-for');
+            return response.data;
+        } catch (error) {
+            throw new Error(`GET request failed: ${error.response?.status || error.message}`);
+        }
+    }
 }
 
 export const sdk = new SDK();

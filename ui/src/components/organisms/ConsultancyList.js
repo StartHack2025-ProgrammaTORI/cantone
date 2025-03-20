@@ -3,9 +3,9 @@ import ConsultancyCard from '../molecules/ConsultancyCard';
 
 const ConsultancyList = ({ title, items }) => {
   return (
-    <div style={{ marginBottom: '30px' }}>
-      <h2>{title}</h2>
-      <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}>
+    <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px' }}>
+      <h2 style={{ textAlign: "left" }}>{title}</h2>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', paddingLeft: '30px' }}>
         {items.map((item, index) => (
           <ConsultancyCard key={index} title={item} />
         ))}
