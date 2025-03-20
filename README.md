@@ -56,7 +56,7 @@
 
 # Home page
 
-!(UI.png)
+![alt](./UI.png)
 
 ## Suggested consultancy
 - Caso utente **conferma**:
