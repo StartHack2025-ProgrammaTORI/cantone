@@ -5,11 +5,12 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { fontSize } from '../../styles/styles';
-export default function CardComponent({ title, content, handleClick}) {
+import { fontSize, borderRadius } from '../../styles/styles';
+
+export default function CardComponent({ title, content, status, handleClick}) {
     return (
         <Box sx={{ minWidth: 275 }}>
-            <Card variant="outlined">
+            <Card variant="outlined" sx={{ borderRadius: borderRadius.small }}>
                 <React.Fragment>
                     <CardContent>
                     <Typography gutterBottom sx={{ color: 'text.primary', fontSize: fontSize.large }}>
@@ -19,8 +20,11 @@ export default function CardComponent({ title, content, handleClick}) {
                         {content}
                     </Typography>
                     </CardContent>
-                    <CardActions>
-                    <Button size="small" onClick={handleClick}>Learn More</Button>
+                    <CardActions sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <Button size="small" onClick={handleClick}>Continua</Button>
+                        <Typography sx={{ fontSize: fontSize.small, color: 'text.secondary' }}>
+                            {status}
+                        </Typography>
                     </CardActions>
                 </React.Fragment>
             </Card>
