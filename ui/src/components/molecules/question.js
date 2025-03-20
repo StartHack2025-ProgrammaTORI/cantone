@@ -1,37 +1,35 @@
-import CardComponent from "../atomics/card";
-import { Radio, RadioGroup, FormControlLabel, FormControl } from '@mui/material';
+import React from 'react';
 
-function QuestionComponent({question, options, status, handleClick, indexAnswer, setIndexAnswer, textStyle}) {
-    return (
-        <div style={{ textAlign: 'center' }}>
-            <CardComponent
-                textStyle={textStyle}
-                title={question}
-                content={
-                    <FormControl>
-                        <RadioGroup
-                            onChange={(event) => {
-                                const selectedValue = event.target.value;
-                                const selectedIndex = options.indexOf(selectedValue);
-                                setIndexAnswer(selectedIndex);
-                            }}
-                        >
-                            {options.map((option, index) => (
-                                <FormControlLabel
-                                    key={option}
-                                    value={option}
-                                    control={<Radio checked={index === indexAnswer} />}
-                                    label={option}
-                                />
-                            ))}
-                        </RadioGroup>
-                    </FormControl>
-                }
-                status={status}
-                handleClick={handleClick}
-            />
+function QuestionComponent({ question, options, status, handleClick, indexAnswer, setIndexAnswer, textStyle, style }) {
+  return (
+    <div style={{ border: 'none', boxShadow: 'none', textAlign: 'center', width: '100%', ...style }}>
+      <div style={{ ...textStyle }}>
+        <h2 style={{ textAlign: "left" }}>{question}</h2>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', paddingLeft: '30px' }}>
+          {options.map((option) => {
+            console.log("option: ", option.id)
+          return (
+            <label key={option.id} style={{ marginBottom: '10px', textAlign: 'left' }}>
+              <input
+                type="radio"
+                value={option.text}
+                checked={option.id === indexAnswer}
+                onChange={() => setIndexAnswer(option.id)}
+                style={{ marginRight: '10px' }}
+              />
+              {option.text}
+            </label>
+          )
+    })}
         </div>
-    );
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '20px' }}>
+          <p style={{ margin: 0 }}>{status}</p>
+          <button onClick={handleClick} style={{ alignSelf: 'flex-end' }}>Continua</button>
+        </div>
+        <p style={{ textAlign: 'right', marginTop: '10px' }}>Question {status} of 5</p>
+      </div>
+    </div>
+  );
 };
 
-export default QuestionComponent
+export default QuestionComponent;

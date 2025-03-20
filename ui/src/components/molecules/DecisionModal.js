@@ -3,7 +3,7 @@ import { sdk } from '../../sdk/sdk'; // Import the SDK
 
 const DecisionModal = ({ open, handleClose, title }) => {
   const handleDecision = async (decision) => {
-    await sdk.sendDecision(title, decision);
+    // await sdk.sendDecision(title, decision);
     handleClose();
   };
 
