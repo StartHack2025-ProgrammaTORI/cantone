@@ -6,6 +6,11 @@
 	- contatti
 	- fatturato
 2) Profiling
+3) **Case B2B:** AI cerca per match tra la descrizione e i vari profili delle aziende a cui suggerirsi come consulente
+	- Controlla se passa i seguenti filtri:
+		- Non è presente come azienda in `consulenze.disliked-incoming`
+		- L'area in cui potrebbe intervenire l'azienda di consulenza (AI generated) non è presente in `consulenze.accepted`
+		Nel caso ci si aggiunge a `consulenze.suggested` dell'azienda a cui ci si sta offrendo
 
 
 ```json
@@ -20,14 +25,13 @@
 				"fatturato": 18183,
 			},
 			"consulenze": {
-				"suggerite": ["Department of Transport Systems"],
-				"pending-incoming": ["Sustainability Innovation Lab"],
-				"pending-outcoming": ["Department of Computer Science"],
-				"disliked-incoming":{
-					"area":[],
-					"companies":[]
+				"suggested": ["Azienda che si propone come consulente"],
+				"pending-outcoming": ["Azienda a cui ho chiesto consulenza e sto aspettando una risposta"],
+				"disliked-outcoming":{
+					"area":["Area a cui non sono interessato a investire"],
+					"companies":["Compagnia a cui non voglio chiedere consulenza"]
 				},
-				"disliked-outcoming": ["Aziende con cui non vuole collaborare"]
+				"disliked-incoming": ["Aziende da cui non voglio ricevere offerte di consulenza"],
 				"accepted":[
 					"Areas in which he already invested"
 				]
@@ -53,16 +57,15 @@
 ```
 
 
-
 # Home page
 
-![alt](./UI.png)
+![alt][./UI.png]
 
 ## Suggested consultancy
 - Caso utente **conferma**:
 	- `{genral_info, profile}`  vengono passate all'AI per generare un report da inoltrate all'azienda di consulenza
 	- **Commento:** in questo modo si facilità la vita al consulente
-	-  L'area in cui interviene l'azienda di consulenza viene aggiunta a `consulenze.pending-incoming`
+	-  L'area in cui interviene l'azienda di consulenza viene aggiunta a `consulenze.pending-outcome`
 - Caso utente **rifiuta**:
 	- Chiede se ha rifiutato perchè non è interessato a collaborare con quel consulente o per l'area d'investimento
 		- Caso **Area**: l'area in cui sarebbe intervenuta l'azienda di consulenza (AI generated) viene aggiunta a `consulenze.disliked-incoming.area`
@@ -71,4 +74,4 @@
 
 ## Ask for your consultancy
 - Notifica la tua decisione all'azienda che ha richiesto la consulenza tramite **WhatsApp** o **email** e la rimuove dalla mia lista
-- Si rimuove da `consulenze.pending-outcoming` dell'azienda che ha richiesto la consulenza
+- Si rimuove da `consulenze.pending-outcoming` dell'azienda che ha richiesto la consulenza e si aggiunge a `consulenze.accepted`
