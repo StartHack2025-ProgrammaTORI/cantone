@@ -55,8 +55,9 @@ class SDK {
 
     async getSuggestedConsultancy() {
         try {
-            const response = await this._instance.get('/consultancy/suggested');
-            return response.data;
+            //const response = await this._instance.get('/consultancy/suggested');
+            // return response.data;
+            return ["Department of Transport"]
         } catch (error) {
             throw new Error(`GET request failed: ${error.response?.status || error.message}`);
         }
@@ -64,8 +65,9 @@ class SDK {
 
     async getRequestedConsultancy() {
         try {
-            const response = await this._instance.get('/consultancy/requested');
-            return response.data;
+            //const response = await this._instance.get('/consultancy/requested');
+            // return response.data;
+            return ["Department of Transport"]
         } catch (error) {
             throw new Error(`GET request failed: ${error.response?.status || error.message}`);
         }
@@ -73,10 +75,35 @@ class SDK {
 
     async getConsultancyAskedFor() {
         try {
-            const response = await this._instance.get('/consultancy/asked-for');
-            return response.data;
+            //const response = await this._instance.get('/consultancy/asked-for');
+            //return response.data;
+            return ["Department of Transport"]
         } catch (error) {
             throw new Error(`GET request failed: ${error.response?.status || error.message}`);
+        }
+    }
+
+    async getConsultancyDetails(title) {
+        try {
+            // Mocked response
+            return {
+                description: `Description for ${title}`,
+                email: `${title.toLowerCase().replace(/\s+/g, '')}@example.com`
+            };
+        } catch (error) {
+            throw new Error(`GET request failed: ${error.response?.status || error.message}`);
+        }
+    }
+
+    async sendDecision(title, decision) {
+        try {
+            const response = await this._instance.post('/consultancy/decision', {
+                title,
+                decision
+            });
+            return response.data;
+        } catch (error) {
+            throw new Error(`POST request failed: ${error.response?.status || error.message}`);
         }
     }
 }
