@@ -1,22 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { Box, Typography, Button } from '@mui/material';
 import './LandingPage.css';
 
 const LandingPage = () => {
   const [fadeOut, setFadeOut] = useState(false);
 
-  useEffect(() => {
-    // Trigger fade out after 2 seconds
-    const timer = setTimeout(() => {
-      setFadeOut(true);
-    }, 2000);
-
-    return () => clearTimeout(timer);
-  }, []);
+  const handleLoginClick = () => {
+    setFadeOut(true);
+  };
 
   return (
-    <div className="landing-container">
-      <h1 className={`hello-text ${fadeOut ? 'fade-out' : ''}`}>Hello</h1>
-    </div>
+    <Box className="landing-container">
+      <Typography
+        variant="h1"        node -v        node -v        node -v
+        className={`hello-text ${fadeOut ? 'fade-out' : ''}`}
+      >
+        Hello
+      </Typography>
+      <Button
+        variant="contained"
+        className="login-button"
+        onClick={handleLoginClick}
+      >
+        Login
+      </Button>
+    </Box>
   );
 };
 

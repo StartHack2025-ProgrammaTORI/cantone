@@ -1,18 +1,57 @@
+/* Container with a dynamic gradient background */
 .landing-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Full viewport height */
-    background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #74ebd5, #acb6e5);
+  animation: backgroundShift 10s infinite alternate;
+}
+
+/* Animate background brightness for a subtle dynamic effect */
+@keyframes backgroundShift {
+  from {
+    filter: brightness(0.95);
   }
-  
-  .hello-text {
-    font-size: 3rem;
-    opacity: 1;
-    transition: opacity 2s ease;
+  to {
+    filter: brightness(1.05);
   }
-  
-  .hello-text.fade-out {
-    opacity: 0;
-  }
-  
+}
+
+/* Styling for the "Hello" text */
+.hello-text {
+  font-size: 4rem;
+  color: #ffffff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 20px;
+  transition: opacity 2s ease, transform 2s ease;
+}
+
+/* Fade-out effect with slight upward movement */
+.hello-text.fade-out {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+/* Styling for the Login button */
+.login-button {
+  background-color: #ffffff;
+  border: none;
+  border-radius: 25px;
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  margin-top: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Button hover effect */
+.login-button:hover {
+  background-color: #f0f0f0;
+  transform: scale(1.05);
+}
+
