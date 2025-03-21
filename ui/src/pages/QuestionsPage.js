@@ -1,24 +1,27 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import QuestionComponent from '../components/molecules/question';
+import GeneralInfoComponent from '../components/molecules/GeneralInfoComponent'; // New import
 import { sdk } from '../sdk/sdk';
 import { useNavigate } from 'react-router-dom';
 
 const QuestionsPage = () => {
   const navigate = useNavigate();
-  const [question, setQuestion] = React.useState({});
-  const [indexQuestion, setIndexQuestion] = React.useState(0);
-  const [indexAnswer, setIndexAnswer] = React.useState(null);
-  const [fadeOutAll, setFadeOutAll] = React.useState(false);
-  const [fadeOutQuestion, setFadeOutQuestion] = React.useState(false);
+  const [question, setQuestion] = useState({});
+  const [indexQuestion, setIndexQuestion] = useState(0);
+  const [indexAnswer, setIndexAnswer] = useState(null);
+  const [fadeOutAll, setFadeOutAll] = useState(false);
+  const [fadeOutQuestion, setFadeOutQuestion] = useState(false);
+  const [generalInfoSubmitted, setGeneralInfoSubmitted] = useState(false); // New state
+  const [generalInfo, setGeneralInfo] = useState({}); // New state
 
   const questionStyles = {
     opacity: fadeOutQuestion ? 0 : 1,
-    transition: 'opacity 0.5s ease-in-out',
+    transition: 'opacity 0.1s ease-in-out',
   };
 
   const allStyles = {
     opacity: fadeOutAll ? 0 : 1,
-    transition: 'opacity 0.5s ease-in-out',
+    transition: 'opacity 0.1s ease-in-out',
   };
 
   const fadeOutEffect = (onPress, setFadeOut) => {
@@ -32,7 +35,7 @@ const QuestionsPage = () => {
   useEffect(() => {
     if (indexQuestion >= 5)
       fadeOutEffect(() => navigate('/home'), setFadeOutAll);
-    else {
+    else if (generalInfoSubmitted) { // Check if general info is submitted
       sdk.getQuestion(indexQuestion).then((data) => {
         setIndexAnswer(null);
         setQuestion(data.data);
@@ -40,11 +43,17 @@ const QuestionsPage = () => {
           fadeOutEffect(() => navigate('/home'), setFadeOutAll);
       });
     }
-  }, [indexQuestion, navigate]);
+  }, [indexQuestion, navigate, generalInfoSubmitted]);
 
   const handleClick = async () => {
-    await sdk.answerQuestion(indexAnswer, indexQuestion);
-    fadeOutEffect(() => setIndexQuestion(indexQuestion + 1), setFadeOutQuestion);
+      await sdk.answerQuestion(indexAnswer, indexQuestion);
+      fadeOutEffect(() => setIndexQuestion(indexQuestion + 1), setFadeOutQuestion);
+  };
+
+  const handleGeneralInfoChange = async (info) => { // New handler
+    setGeneralInfo(info);
+    await sdk.submitGeneralInfo(generalInfo);
+    setGeneralInfoSubmitted(true);
   };
 
   const pageStyles = {
@@ -66,14 +75,23 @@ const QuestionsPage = () => {
     border: 'none', boxShadow: 'none'
   };
 
+  const buttonContainerStyles = {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    width: '100%',
+    padding: '20px'
+  };
+
   return (
     <div style={pageStyles}>
       <h1 style={{ textAlign: 'center', marginTop: '20px' }}>
         Questions Page
       </h1>
-      <div style={{ marginTop: '30px', textAlign: 'center', width: '100%' , padding: '20px'}}>
+      <div style={{ marginTop: '30px', textAlign: 'left', width: '100%' , padding: '20px'}}>
         {
-          Object.keys(question).length ? (
+          !generalInfoSubmitted ? (
+            <GeneralInfoComponent onChange={handleGeneralInfoChange} /> // New component
+          ) : Object.keys(question).length ? (
             <QuestionComponent
               textStyle={questionStyles}
               question={question.question}

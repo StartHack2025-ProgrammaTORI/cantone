@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { UserContext } from '../components/context/user';
+import { sdk } from '../sdk/sdk';
 
 const LoginPage = () => {
   const { setUser, user } = React.useContext(UserContext);
@@ -15,7 +16,9 @@ const LoginPage = () => {
     if (user && user.id) navigate('/home');
     const sessionToken = localStorage.getItem('sessionToken');
     if (sessionToken) {
-      navigate('/home');
+      sdk.getConsultancy('RECEIVER')
+      .then(() => navigate('/home'))
+      .catch(() => {})
     }
   }, [navigate, user]);
 

@@ -8,11 +8,10 @@ const SettingsPage = () => {
   const [areas, setAreas] = useState([]);
   const [companies, setCompanies] = useState([]);
   const [refusedCompanies, setRefusedCompanies] = useState([]);
-
+  const [me, setMe] = useState({});
   useEffect(() => {
     // Fetch data using SDK
-    sdk.getDislikedAreas().then(data => setAreas(data));
-    sdk.getDislikedCompanies().then(data => setCompanies(data));
+    sdk.getConsultant().then(data => setMe(data));
     sdk.getRefusedCompanies().then(data => setRefusedCompanies(data));
   }, []);
 
@@ -32,7 +31,7 @@ const SettingsPage = () => {
     margin: '0', // Remove any margin from the consultancy list
     width: '100%', // Ensure the list takes the full width
   };
-
+  console.log(me)
   return (
     <div style={pageStyles}>
       <svg style={{ fill: "#000000", position: 'absolute', top: '10px', right: '10px', cursor: 'pointer', background: 'none', border: 'none'}}
@@ -41,8 +40,8 @@ const SettingsPage = () => {
         Settings
       </h1>
       <div style={{ marginTop: '30px', textAlign: 'center', width: '100%' }}>
-        <SettingsList title="Don't Suggest Me - Areas" items={areas} type="area" setItems={setAreas} style={listStyles} />
-        <SettingsList title="Don't Suggest Me - Companies" items={companies} type="company" setItems={setCompanies} style={listStyles} />
+        <SettingsList title="Don't Suggest Me - Areas" items={('black_list_focus_area' in me) ? me.black_list_focus_area.map((a) => ({name: a})) : []} type="area" setItems={setAreas} style={listStyles} />
+        <SettingsList title="Don't Suggest Me - Companies" items={('black_list_company' in me) ? me.black_list_company : []} type="company" setItems={setCompanies} style={listStyles} />
         <SettingsList title="Companies I Refused to Give Consulting" items={refusedCompanies} type="refusedCompany" setItems={setRefusedCompanies} style={listStyles} />
       </div>
     </div>

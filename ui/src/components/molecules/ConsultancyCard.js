@@ -44,7 +44,8 @@ const ConsultancyCard = ({id, title, role, status, description, email, handleCon
         </CardContent>
       </Card>
       <ConsultancyDetailsModal open={detailsOpen} handleClose={handleDetailsClose} title={title} description={description} email={email} />
-      <DecisionModal id={id} open={decisionOpen} handleClose={handleDecisionClose} title={title} handleReject={handleReject} />
+      <DecisionModal id={id} open={decisionOpen} handleClose={handleDecisionClose} title={title} handleReject={handleReject} role={role
+      } />
     </>
   );
 };

@@ -11,10 +11,14 @@ const HomePage = () => {
   const [suggestedOrRequestedConsultancy, setSuggestedOrRequestedConsultancy] = useState([]);
   const [consultancyAskedFor, setConsultancyAskedFor] = useState([]);
 
-  useEffect(() => {
-    // Mocked data using SDK
+  function getData() {
     sdk.getConsultancy('RECEIVER').then(data => setSuggestedOrRequestedConsultancy(data));
     sdk.getConsultancy('PROVIDER').then(data => setConsultancyAskedFor(data));
+  }
+
+  useEffect(() => {
+    // Mocked data using SDK
+    getData();
   }, []);
 
   const pageStyles = {
@@ -36,14 +40,17 @@ const HomePage = () => {
 
   const handleConfirmSuggested = (id, role) => {
     console.log("id: ", id)
-    sdk.changeConsultancyStatus(id, 'PENDING', role).then(data => setSuggestedOrRequestedConsultancy(data))
+    sdk.changeConsultancyStatus(id, 'PENDING', role)
+    getData()
   }
   const handleConfirmAskedFor = (id, role) => {
     console.log("id: ", id)
-    sdk.changeConsultancyStatus(id, 'CONFIRMED', role).then(data => setConsultancyAskedFor(data));
+    sdk.changeConsultancyStatus(id, 'CONFIRMED', role)
+    getData()
   }
   const handleReject = (id, role, decision) => {
-    sdk.changeConsultancyStatus(id, 'REJECT', role, decision).then(data => setConsultancyAskedFor(data));
+    sdk.changeConsultancyStatus(id, 'REJECTED', role, decision)
+    getData()
   }
   return (
     <div style={pageStyles}>

@@ -11,7 +11,7 @@ const SettingsList = ({ title, items, type, setItems }) => {
       <h2 style={{ textAlign: "left" }}>{title}</h2>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', paddingLeft: '30px' }}>
         {items.map((item, index) => (
-          <SettingsCard key={index} title={item} type={type} onRemove={handleRemove} />
+          <SettingsCard key={index} title={item.name} type={type} onRemove={handleRemove} />
         ))}
       </div>
     </div>

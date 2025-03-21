@@ -41,6 +41,18 @@ class SDK {
         }
     }
 
+    async getConsultant() {
+        const sessionToken = localStorage.getItem('sessionToken');
+        try {
+            const response = await this._instance.get('/consultants', {
+                headers: { Authorization: `Bearer ${sessionToken}` }
+            });
+            return response.data.data;
+        } catch (error) {
+        throw new Error(`GET request failed: ${error.response?.status || error.message}`);
+        }
+    }
+
     async getTodos() {
         try {
             const response = await this._instance.get('/todos');
@@ -67,7 +79,6 @@ class SDK {
             });
             return response.data.data;
         } catch (error) {
-            localStorage.removeItem('sessionToken');
             throw new Error(`GET request failed: ${error.response?.status || error.message}`);
         }
     }
@@ -84,7 +95,6 @@ class SDK {
             });
             return response.data.data;
         } catch (error) {
-            localStorage.removeItem('sessionToken');
             throw new Error(`POST request failed: ${error.response?.status || error.message}`);
         }
     }
@@ -153,8 +163,11 @@ class SDK {
 
     async getRefusedCompanies() {
         try {
-            // Mocked response
-            return ["Company 1", "Company 2"];
+            const data = await this.getConsultancy('PROVIDER');
+            const filtered_data = data.filter(item => item.status === "REJECTED");
+            console.log(filtered_data);
+            
+            return filtered_data;
         } catch (error) {
             throw new Error(`GET request failed: ${error.response?.status || error.message}`);
         }
@@ -184,6 +197,24 @@ class SDK {
             return { success: true };
         } catch (error) {
             throw new Error(`DELETE request failed: ${error.response?.status || error.message}`);
+        }
+    }
+
+    async submitGeneralInfo(info) {
+        try {
+            console.log("info:", info)
+            const response = await this._instance.put('/consultants',
+            info,
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('sessionToken')}`
+                }
+            }
+        );
+            return await response.data;
+        } catch (error) {
+            console.error('Error submitting general info:', error);
+            throw error;
         }
     }
 }

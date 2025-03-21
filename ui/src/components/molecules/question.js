@@ -23,10 +23,8 @@ function QuestionComponent({ question, options, status, handleClick, indexAnswer
     })}
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '20px' }}>
-          <p style={{ margin: 0 }}>{status}</p>
           <button onClick={handleClick} style={{ alignSelf: 'flex-end' }}>Continua</button>
         </div>
-        <p style={{ textAlign: 'right', marginTop: '10px' }}>Question {status} of 5</p>
       </div>
     </div>
   );
