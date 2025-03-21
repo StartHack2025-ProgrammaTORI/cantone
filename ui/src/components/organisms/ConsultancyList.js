@@ -1,7 +1,7 @@
 import React from 'react';
 import ConsultancyCard from '../molecules/ConsultancyCard';
 
-const ConsultancyList = ({ title, items, role, handleConfirmSuggested, handleConfirmAskedFor }) => {
+const ConsultancyList = ({ title, items, role, handleConfirmSuggested, handleConfirmAskedFor, handleReject }) => {
 
   return (
     <div style={{ margin: '0 auto', padding: '20px' }}>
@@ -20,7 +20,9 @@ const ConsultancyList = ({ title, items, role, handleConfirmSuggested, handleCon
               status={item.status}
               email={role === 'RECEIVER' ? item.consultancy_provider.contact : item.consultancy_receiver.contact}
               handleConfirm={
-                ifSuggested ? handleConfirmSuggested : ifProvider ? handleConfirmAskedFor : null}
+                ifSuggested ? handleConfirmSuggested : ifProvider ? handleConfirmAskedFor : null
+              }
+              handleReject={handleReject}
           />
         )
         }

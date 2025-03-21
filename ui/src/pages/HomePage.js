@@ -42,6 +42,9 @@ const HomePage = () => {
     console.log("id: ", id)
     sdk.changeConsultancyStatus(id, 'CONFIRMED', role).then(data => setConsultancyAskedFor(data));
   }
+  const handleReject = (id, role, decision) => {
+    sdk.changeConsultancyStatus(id, 'REJECT', role, decision).then(data => setConsultancyAskedFor(data));
+  }
   return (
     <div style={pageStyles}>
       <svg style={{ fill: "#000000", position: 'absolute', top: '10px', right: '10px', cursor: 'pointer', background: 'none', border: 'none'}}
@@ -57,6 +60,7 @@ const HomePage = () => {
           style={consultancyListStyles} role={'RECEIVER'}
           handleConfirmSuggested={handleConfirmSuggested}
           handleConfirmAskedFor={handleConfirmAskedFor}
+          handleReject={handleReject}
         />
         <ConsultancyList
           title="Requested Consultancy"
@@ -64,6 +68,7 @@ const HomePage = () => {
           style={consultancyListStyles} role={'RECEIVER'}
           handleConfirmSuggested={handleConfirmSuggested}
           handleConfirmAskedFor={handleConfirmAskedFor}
+          handleReject={handleReject}
         />
         <ConsultancyList
           title="Consultancy I'm Asked For"
@@ -71,6 +76,7 @@ const HomePage = () => {
           style={consultancyListStyles} role={'PROVIDER'}
           handleConfirmSuggested={handleConfirmSuggested}
           handleConfirmAskedFor={handleConfirmAskedFor}
+          handleReject={handleReject}
         />
       </div>
     </div>

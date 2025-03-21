@@ -72,11 +72,12 @@ class SDK {
         }
     }
 
-    async changeConsultancyStatus(id, status, role) {
+    async changeConsultancyStatus(id, status, role, decision) {
         const sessionToken = localStorage.getItem('sessionToken');
         try {
             const response = await this._instance.post(`/proposals/${id}?role=${role}`, {
-                status
+                status,
+                decision
             },
             {
                 headers: { Authorization: `Bearer ${sessionToken}` }
