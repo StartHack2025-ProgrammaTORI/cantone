@@ -72,6 +72,22 @@ class SDK {
         }
     }
 
+    async changeConsultancyStatus(id, status, role) {
+        const sessionToken = localStorage.getItem('sessionToken');
+        try {
+            const response = await this._instance.post(`/proposals/${id}?role=${role}`, {
+                status
+            },
+            {
+                headers: { Authorization: `Bearer ${sessionToken}` }
+            });
+            return response.data.data;
+        } catch (error) {
+            localStorage.removeItem('sessionToken');
+            throw new Error(`POST request failed: ${error.response?.status || error.message}`);
+        }
+    }
+
     async getRequestedConsultancy() {
         try {
             //const response = await this._instance.get('/consultancy/requested');

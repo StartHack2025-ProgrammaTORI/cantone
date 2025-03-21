@@ -5,7 +5,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import ConsultancyDetailsModal from './ConsultancyDetailsModal'; // Import the new component
 import DecisionModal from './DecisionModal'; // Import the new component
 
-const ConsultancyCard = ({ title, description, email }) => {
+const ConsultancyCard = ({id, title, role, status, description, email, handleConfirm, handleReject }) => {
   const [detailsOpen, setDetailsOpen] = useState(false);
   const [decisionOpen, setDecisionOpen] = useState(false);
 
@@ -15,6 +15,11 @@ const ConsultancyCard = ({ title, description, email }) => {
   const handleDecisionOpen = () => setDecisionOpen(true);
   const handleDecisionClose = () => setDecisionOpen(false);
 
+  const handleConfirmClick = () => {
+    handleConfirm(id, role)
+    // Add any additional logic for the confirm action here
+  };
+
   return (
     <>
       <Card style={{ margin: '0px 0', padding: '0px 0px', textAlign: 'left', width: '100%', maxWidth: '600px', border: 'none', boxShadow: 'none', height: 'auto' }}>
@@ -22,12 +27,19 @@ const ConsultancyCard = ({ title, description, email }) => {
           <h4 style={{ textAlign: 'left'}}>→ {title}</h4>
           <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
             <button onClick={handleDetailsOpen} style={{ textAlign: 'left', padding: '0 10px', background: 'none', border: 'none', color: 'blue', cursor: 'pointer' }}>Details</button>
-            <IconButton aria-label="confirm" style={{ padding: '0 0px', color: 'green' }}>
-              <CheckIcon />
-            </IconButton>
-            <IconButton aria-label="close" style={{ padding: '0 0px', color: 'red' }} onClick={handleDecisionOpen}>
-              <CloseIcon />
-            </IconButton>
+            {
+              role === 'RECEIVER' && status === 'PENDING' ?
+                null : (
+                <>
+                  <IconButton aria-label="confirm" style={{ padding: '0 0px', color: 'green' }} onClick={handleConfirmClick}>
+                    <CheckIcon />
+                  </IconButton>
+                  <IconButton aria-label="close" style={{ padding: '0 0px', color: 'red' }} onClick={handleDecisionOpen}>
+                    <CloseIcon />
+                  </IconButton>
+                </>
+              )
+            }
           </div>
         </CardContent>
       </Card>

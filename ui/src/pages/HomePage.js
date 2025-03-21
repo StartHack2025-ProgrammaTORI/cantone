@@ -8,15 +8,13 @@ const HomePage = () => {
   const [fadeOut, setFadeOut] = useState(false);
   const navigate = useNavigate();
 
-  const [suggestedConsultancy, setSuggestedConsultancy] = useState([]);
-  const [requestedConsultancy, setRequestedConsultancy] = useState([]);
+  const [suggestedOrRequestedConsultancy, setSuggestedOrRequestedConsultancy] = useState([]);
   const [consultancyAskedFor, setConsultancyAskedFor] = useState([]);
 
   useEffect(() => {
     // Mocked data using SDK
-    sdk.getSuggestedConsultancy().then(data => setSuggestedConsultancy(data));
-    sdk.getRequestedConsultancy().then(data => setRequestedConsultancy(data));
-    sdk.getConsultancyAskedFor().then(data => setConsultancyAskedFor(data));
+    sdk.getConsultancy('RECEIVER').then(data => setSuggestedOrRequestedConsultancy(data));
+    sdk.getConsultancy('PROVIDER').then(data => setConsultancyAskedFor(data));
   }, []);
 
   const pageStyles = {
@@ -35,7 +33,15 @@ const HomePage = () => {
     margin: '0', // Remove any margin from the consultancy list
     width: '100%', // Ensure the list takes the full width
   };
-  console.log("suggestedConsultancy", suggestedConsultancy.filter((s) => s.status === 'PENDING'));
+
+  const handleConfirmSuggested = (id, role) => {
+    console.log("id: ", id)
+    sdk.changeConsultancyStatus(id, 'PENDING', role).then(data => setSuggestedOrRequestedConsultancy(data))
+  }
+  const handleConfirmAskedFor = (id, role) => {
+    console.log("id: ", id)
+    sdk.changeConsultancyStatus(id, 'CONFIRMED', role).then(data => setConsultancyAskedFor(data));
+  }
   return (
     <div style={pageStyles}>
       <svg style={{ fill: "#000000", position: 'absolute', top: '10px', right: '10px', cursor: 'pointer', background: 'none', border: 'none'}}
@@ -45,9 +51,27 @@ const HomePage = () => {
         .inno
       </h1>
       <div style={{ marginTop: '30px', textAlign: 'center', width: '100%' }}>
-        <ConsultancyList title="Suggested Consultancy" items={suggestedConsultancy.filter((s) => s.status === 'SUGGESTED')} style={consultancyListStyles} />
-        <ConsultancyList title="Requested Consultancy" items={suggestedConsultancy.filter((s) => s.status === 'PENDING' )} style={consultancyListStyles} />
-        <ConsultancyList title="Consultancy I'm Asked For" items={suggestedConsultancy.filter((s) => s.status === '')} style={consultancyListStyles} />
+        <ConsultancyList
+          title="Suggested Consultancy"
+          items={suggestedOrRequestedConsultancy.filter((s) => s.status === 'SUGGESTED')}
+          style={consultancyListStyles} role={'RECEIVER'}
+          handleConfirmSuggested={handleConfirmSuggested}
+          handleConfirmAskedFor={handleConfirmAskedFor}
+        />
+        <ConsultancyList
+          title="Requested Consultancy"
+          items={suggestedOrRequestedConsultancy.filter((s) => s.status === 'PENDING')}
+          style={consultancyListStyles} role={'RECEIVER'}
+          handleConfirmSuggested={handleConfirmSuggested}
+          handleConfirmAskedFor={handleConfirmAskedFor}
+        />
+        <ConsultancyList
+          title="Consultancy I'm Asked For"
+          items={consultancyAskedFor.filter((s) => s.status === 'PENDING')}
+          style={consultancyListStyles} role={'PROVIDER'}
+          handleConfirmSuggested={handleConfirmSuggested}
+          handleConfirmAskedFor={handleConfirmAskedFor}
+        />
       </div>
     </div>
   );

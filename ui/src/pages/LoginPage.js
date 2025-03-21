@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { UserContext } from '../components/context/user';
 
 const LoginPage = () => {
+  const { setUser, user } = React.useContext(UserContext);
   const [fadeOut, setFadeOut] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -10,11 +12,12 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (user && user.id) navigate('/home');
     const sessionToken = localStorage.getItem('sessionToken');
     if (sessionToken) {
       navigate('/home');
     }
-  }, [navigate]);
+  }, [navigate, user]);
 
   const handleLogin = async () => {
     try {
@@ -23,6 +26,11 @@ const LoginPage = () => {
         password,
         returnSecureToken: true
       });
+      setUser({
+        email: response.data.email,
+        id: response.data.localId,
+        idToken: response.data.idToken
+      })
       const token = response.data.idToken;
       localStorage.setItem('sessionToken', token);
       setFadeOut(true);
