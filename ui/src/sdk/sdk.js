@@ -59,15 +59,15 @@ class SDK {
         }
     }
 
-    async getSuggestedConsultancy() {
+    async getConsultancy(role) {
         const sessionToken = localStorage.getItem('sessionToken');
         try {
-            const response = await this._instance.get('/proposals', {
+            const response = await this._instance.get(`/proposals?role=${role}`, {
                 headers: { Authorization: `Bearer ${sessionToken}` }
             });
-            console.log("response: ", response)
-            return response.data;
+            return response.data.data;
         } catch (error) {
+            localStorage.removeItem('sessionToken');
             throw new Error(`GET request failed: ${error.response?.status || error.message}`);
         }
     }
